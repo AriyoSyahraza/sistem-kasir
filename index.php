@@ -1,122 +1,91 @@
-<?php
-// require 'koneksi.php';
-require 'admin/aheader.php';
-?>
+<!DOCTYPE html>
+<html lang="en">
 
-<div
-    class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
-    <div>
-        <h3 class="fw-bold mb-3">Dashboard</h3>
-        <h6 class="op-7 mb-2">Free Bootstrap 5 Admin Dashboard</h6>
-    </div>
-    <div class="ms-md-auto py-2 py-md-0">
-        <a href="#" class="btn btn-label-info btn-round me-2">Manage</a>
-        <a href="../admin/index.php" class="btn btn-primary btn-round">Add Customer</a>
-    </div>
-</div>
-<div class="row row-card-no-pd">
-    <div class="col-12 col-sm-6 col-md-6 col-xl-3">
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h6><b>Todays Income</b></h6>
-                        <p class="text-muted">All Customs Value</p>
-                    </div>
-                    <h4 class="text-info fw-bold">$170</h4>
-                </div>
-                <div class="progress progress-sm">
-                    <div
-                        class="progress-bar bg-info w-75"
-                        role="progressbar"
-                        aria-valuenow="75"
-                        aria-valuemin="0"
-                        aria-valuemax="100"></div>
-                </div>
-                <div class="d-flex justify-content-between mt-2">
-                    <p class="text-muted mb-0">Change</p>
-                    <p class="text-muted mb-0">75%</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-12 col-sm-6 col-md-6 col-xl-3">
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h6><b>Total Revenue</b></h6>
-                        <p class="text-muted">All Customs Value</p>
-                    </div>
-                    <h4 class="text-success fw-bold">$120</h4>
-                </div>
-                <div class="progress progress-sm">
-                    <div
-                        class="progress-bar bg-success w-25"
-                        role="progressbar"
-                        aria-valuenow="25"
-                        aria-valuemin="0"
-                        aria-valuemax="100"></div>
-                </div>
-                <div class="d-flex justify-content-between mt-2">
-                    <p class="text-muted mb-0">Change</p>
-                    <p class="text-muted mb-0">25%</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-12 col-sm-6 col-md-6 col-xl-3">
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h6><b>New Orders</b></h6>
-                        <p class="text-muted">Fresh Order Amount</p>
-                    </div>
-                    <h4 class="text-danger fw-bold">15</h4>
-                </div>
-                <div class="progress progress-sm">
-                    <div
-                        class="progress-bar bg-danger w-50"
-                        role="progressbar"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"></div>
-                </div>
-                <div class="d-flex justify-content-between mt-2">
-                    <p class="text-muted mb-0">Change</p>
-                    <p class="text-muted mb-0">50%</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-12 col-sm-6 col-md-6 col-xl-3">
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h6><b>New Users</b></h6>
-                        <p class="text-muted">Joined New User</p>
-                    </div>
-                    <h4 class="text-secondary fw-bold">12</h4>
-                </div>
-                <div class="progress progress-sm">
-                    <div
-                        class="progress-bar bg-secondary w-25"
-                        role="progressbar"
-                        aria-valuenow="25"
-                        aria-valuemin="0"
-                        aria-valuemax="100"></div>
-                </div>
-                <div class="d-flex justify-content-between mt-2">
-                    <p class="text-muted mb-0">Change</p>
-                    <p class="text-muted mb-0">25%</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<head>
+    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="assets/login/images/icons/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="assets/login/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="assets/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="assets/login/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="assets/login/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="assets/login/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="assets/login/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="assets/login/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="assets/login/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="assets/login/css/util.css">
+    <link rel="stylesheet" type="text/css" href="assets/login/css/main.css">
+    <!--===============================================================================================-->
+</head>
 
-<?php
-require 'admin/afooter.php';
-?>
+<body>
+
+    <div class="limiter">
+        <div class="container-login100" style="background-image: url('assets/img/bg_baru.jpg');">
+            <div class="wrap-login100 p-t-30 p-b-50">
+                <span class="login100-form-title p-b-41">
+                   
+                </span>
+                <form class="login100-form validate-form p-b-33 p-t-5" action="cek_login.php" method="post">
+                    <?php if (isset($_GET['message'])) : ?>
+                        <div class="row justify-content-center">
+                            <small class="alert alert-danger" role="alert">
+                                <?= $_GET['message']; ?>
+                            </small>
+                        </div>
+                    <?php endif ?>
+                    <div class="wrap-input100 validate-input" data-validate="Enter username">
+                        <input class="input100" type="text" name="username" placeholder="User name">
+                        <span class="focus-input100" data-placeholder="&#xe82a;"></span>
+                    </div>
+
+                    <div class="wrap-input100 validate-input" data-validate="Enter password">
+                        <input class="input100" type="password" name="password" placeholder="Password">
+                        <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+                    </div>
+
+                    <div class="container-login100-form-btn m-t-32">
+                        <button class="login100-form-btn" type="submit" >
+                            Login
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="dropDownSelect1"></div>
+
+    <!--===============================================================================================-->
+    <script src="assets/login/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="assets/login/vendor/animsition/js/animsition.min.js"> </script>
+    <script src="assets/login/vendor/bootstrap/js/popper.js"></script>
+    <script src="assets/login/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="assets/login/vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="assets/login/vendor/daterangepicker/moment.min.js"></script>
+    <script src="assets/login/vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="assets/login/vendor/countdowntime/countdowntime.js"></script>
+    <!--===============================================================================================-->
+    <script src="assets/login/js/main.js"></script>
+
+</body>
+
+</html>

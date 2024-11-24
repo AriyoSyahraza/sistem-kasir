@@ -1,6 +1,12 @@
 <?php
 // require 'koneksi.php';
 $title = 'Customer';
+
+require 'koneksi.php';
+
+$query = 'SELECT * FROM customers ORDER BY customer_id ASC ';
+$data = mysqli_query($conn, $query);
+
 require 'aheader.php';
 ?>
 
@@ -28,41 +34,38 @@ require 'aheader.php';
                     <th>Nama Customer</th>
                     <th>No HP</th>
                     <th>Poin</th>
-                    <th>Order</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                $customers = [
-                    ['no' => 1, 'name' => 'John Doe', 'phone' => '08123456789', 'points' => 120, 'orders' => 10],
-                    ['no' => 2, 'name' => 'Jane Smith', 'phone' => '08198765432', 'points' => 80, 'orders' => 5],
-                    ['no' => 3, 'name' => 'Emily Johnson', 'phone' => '08122334455', 'points' => 200, 'orders' => 15],
-                ];
+                $no = 1;
+                if (mysqli_num_rows($data) > 0) {
+                    while ($plg = mysqli_fetch_assoc($data)) {
+                ?>
 
-                foreach ($customers as $customer) {
-                    echo "
-                    <tr>
-                        <td>{$customer['no']}</td>
-                        <td>{$customer['name']}</td>
-                        <td>{$customer['phone']}</td>
-                        <td>{$customer['points']}</td>
-                        <td>{$customer['orders']}</td>
-                        <td>
-                            <div class='d-flex justify-content-around'>
-                                <button class='btn btn-info btn-sm'>
-                                    <i class='fas fa-eye'></i> Detail
-                                </button>
-                                <button class='btn btn-warning btn-sm'>
-                                    <i class='fas fa-edit'></i> Edit
-                                </button>
-                                <button class='btn btn-danger btn-sm'>
-                                    <i class='fas fa-trash'></i> Delete
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    ";
+                        <tr>
+                            <td><?= $no++; ?></td>
+                            <td><?= $plg['name']; ?></td>
+                            
+                            <td><?= $plg['phone_number']; ?></td>
+                            <td><?= $plg['points']; ?></td>
+                            <td><?= $plg['status']; ?></td>
+                            <td>
+                                <div class="form-button-action">
+                                    <a href="detail_staff.php?id=<?= $plg['customer_id']; ?>" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Detail">
+                                        <i class="fa fa-info-circle"></i>
+                                    </a>
+                                    <a href="edit_staff.php?id=<?= $plg['customer_id']; ?>" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a href="hapus_staff.php?id=<?= $plg['customer_id']; ?>" onclick="return confirm('Are you sure you want to deactivate this staff?');" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Hapus">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                <?php }
                 }
                 ?>
             </tbody>
