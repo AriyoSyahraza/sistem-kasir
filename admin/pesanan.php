@@ -1,6 +1,15 @@
 <?php
 // require 'koneksi.php';
 $title = 'Pesanan';
+require 'koneksi.php';
+
+$query = 'SELECT * FROM orders ORDER BY order_id ASC ';
+$data = mysqli_query($conn, $query);
+
+
+
+
+
 require 'aheader.php';
 ?>
 
@@ -13,9 +22,9 @@ require 'aheader.php';
 <div class="container my-5">
     <!-- Tombol Tambah Pesanan -->
     <div class="text-end mb-3">
-        <button class="btn btn-primary">
-            <i class="fas fa-plus"></i> Create Pesanan
-        </button>
+    <a href="pesanan_create.php" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Tambah Pesanan
+        </a>
     </div>
 
     <div class="row mb-4">
@@ -49,37 +58,35 @@ require 'aheader.php';
                 </tr>
             </thead>
             <tbody>
-                <?php
-                $pesanan = [
-                    ['no' => 1, 'kasir' => 'John Doe', 'date' => '2024-11-01', 'total' => 150000],
-                    ['no' => 2, 'kasir' => 'Jane Smith', 'date' => '2024-11-02', 'total' => 200000],
-                    ['no' => 3, 'kasir' => 'Emily Johnson', 'date' => '2024-11-03', 'total' => 250000],
-                ];
-
-                foreach ($pesanan as $item) {
-                    echo "
-                    <tr>
-                        <td>{$item['no']}</td>
-                        <td>{$item['date']}</td>
-                        <td>{$item['kasir']}</td>
-                        <td>Rp " . number_format($item['total'], 0, ',', '.') . "</td>
-                        <td>
-                            <div class='d-flex justify-content-around'>
-                                <button class='btn btn-info btn-sm'>
-                                    <i class='fas fa-eye'></i> Detail
-                                </button>
-                                <button class='btn btn-warning btn-sm'>
-                                    <i class='fas fa-edit'></i> Edit
-                                </button>
-                                <button class='btn btn-danger btn-sm'>
-                                    <i class='fas fa-trash'></i> Delete
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    ";
-                }
+            <?php
+                $no = 1;
+                if (mysqli_num_rows($data) > 0) {
+                    while ($plg = mysqli_fetch_assoc($data)) {
                 ?>
+
+                        <tr>
+                            <td><?= $no++; ?></td>
+                            <td><?= $plg['order_date']; ?></td>
+                            
+                            <td><?= $plg['cashier']; ?></td>
+                            <td><?= $plg['total_amount']; ?></td>
+                           
+                            <td>
+                                <div class="form-button-action">
+                                    <a href="detail_staff.php?id=<?= $plg['customer_id']; ?>" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Detail">
+                                        <i class="fa fa-info-circle"></i>
+                                    </a>
+                                    <a href="edit_staff.php?id=<?= $plg['customer_id']; ?>" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a href="hapus_staff.php?id=<?= $plg['customer_id']; ?>" onclick="return confirm('Are you sure you want to deactivate this staff?');" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Hapus">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                <?php }
+                }?>
             </tbody>
         </table>
     </div>
