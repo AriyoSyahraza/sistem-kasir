@@ -1,11 +1,18 @@
 <?php
-require '../header.php';
+// require 'koneksi.php';
+$title = 'Customer';
+require 'aheader.php';
 ?>
 
+<div class="page-header">
+    <h1 class="fw-bold mb-3">
+        <?= $title; ?>
+    </h1>
+</div>
 <div
     class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
     <div>
-        <h3 class="fw-bold mb-3">Dashboard</h3>
+        <h3 class="fw-bold mb-3">Dashboard admin</h3>
         <h6 class="op-7 mb-2">Free Bootstrap 5 Admin Dashboard</h6>
     </div>
     <div class="ms-md-auto py-2 py-md-0">
@@ -117,5 +124,5 @@ require '../header.php';
 </div>
 
 <?php
-require '../footer.php';
+require 'afooter.php';
 ?>

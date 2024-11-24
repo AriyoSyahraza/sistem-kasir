@@ -1,5 +1,6 @@
 <?php
-require '../header.php';
+require 'koneksi.php';
+require 'cheader.php';
 ?>
 
 <div
@@ -117,5 +118,5 @@ require '../header.php';
 </div>
 
 <?php
-require '../footer.php';
+require 'cfooter.php';
 ?>

@@ -1,5 +1,6 @@
 <?php
-require '../header.php';
+// require 'koneksi.php';
+require 'admin/aheader.php';
 ?>
 
 <div
@@ -10,7 +11,7 @@ require '../header.php';
     </div>
     <div class="ms-md-auto py-2 py-md-0">
         <a href="#" class="btn btn-label-info btn-round me-2">Manage</a>
-        <a href="#" class="btn btn-primary btn-round">Add Customer</a>
+        <a href="../admin/index.php" class="btn btn-primary btn-round">Add Customer</a>
     </div>
 </div>
 <div class="row row-card-no-pd">
@@ -117,5 +118,5 @@ require '../header.php';
 </div>
 
 <?php
-require '../footer.php';
+require 'admin/afooter.php';
 ?>

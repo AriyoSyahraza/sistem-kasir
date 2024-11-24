@@ -24,6 +24,7 @@ CREATE TABLE menu_items (
     menu_item_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(40) NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
+    status ENUM('active', 'inactive') DEFAULT 'active'
     redeemable_points INT DEFAULT 0
 );
 
