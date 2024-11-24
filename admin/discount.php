@@ -10,119 +10,87 @@ require 'aheader.php';
     </h1>
 </div>
 
-<div
-    class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
-    <div>
-        <h3 class="fw-bold mb-3">Dashboard admin</h3>
-        <h6 class="op-7 mb-2">Free Bootstrap 5 Admin Dashboard</h6>
+<div class="container my-5">
+    <!-- Tombol Tambah Discount -->
+    <div class="text-end mb-3">
+        <button class="btn btn-primary">
+            <i class="fas fa-plus"></i> Tambah Discount
+        </button>
     </div>
-    <div class="ms-md-auto py-2 py-md-0">
-        <a href="#" class="btn btn-label-info btn-round me-2">Manage</a>
-        <a href="#" class="btn btn-primary btn-round">Add Customer</a>
+
+    <!-- Filter Tanggal -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <label for="start-date">Dari Tanggal</label>
+            <input type="date" id="start-date" class="form-control">
+        </div>
+        <div class="col-md-4">
+            <label for="end-date">Ke Tanggal</label>
+            <input type="date" id="end-date" class="form-control">
+        </div>
+        <div class="col-md-2 d-flex align-items-end">
+            <button id="reset-filter" class="btn btn-primary w-100">
+                <i class="icon-loop"></i> Reset
+            </button>
+        </div>
+    </div>
+
+    <!-- Tabel Discount -->
+    <div class="table-responsive">
+        <table id="multi-filter-select" class="table table-bordered">
+            <thead class="bg-dark text-white">
+                <tr>
+                    <th>No</th>
+                    <th>Start</th>
+                    <th>Nama Discount</th>
+                    <th>Percentage</th>
+                    <th>Usage</th>
+                    <th>Range (Days)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $discounts = [
+                    ['no' => 1, 'name' => 'Holiday Sale', 'percentage' => 20, 'usage' => 50, 'range' => 7, 'start' => '2024-11-25'],
+                    ['no' => 2, 'name' => 'Black Friday', 'percentage' => 50, 'usage' => 120, 'range' => 3, 'start' => '2024-11-22'],
+                    ['no' => 3, 'name' => 'Weekend Special', 'percentage' => 30, 'usage' => 80, 'range' => 2, 'start' => '2024-11-23'],
+                ];
+
+                foreach ($discounts as $discount) {
+                    echo "
+                    <tr>
+                        <td>{$discount['no']}</td>
+                        <td>{$discount['start']}</td>
+                        <td>{$discount['name']}</td>
+                        <td>{$discount['percentage']}%</td>
+                        <td>{$discount['usage']}</td>
+                        <td>{$discount['range']} days</td>
+                        <td>
+                            <div class='d-flex justify-content-around'>
+                                <button class='btn btn-info btn-sm'>
+                                    <i class='fas fa-eye'></i> Detail
+                                </button>
+                                <button class='btn btn-warning btn-sm'>
+                                    <i class='fas fa-edit'></i> Edit
+                                </button>
+                                <button class='btn btn-danger btn-sm'>
+                                    <i class='fas fa-trash'></i> Delete
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    ";
+                }
+                ?>
+            </tbody>
+        </table>
     </div>
 </div>
-<div class="row row-card-no-pd">
-    <div class="col-12 col-sm-6 col-md-6 col-xl-3">
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h6><b>Todays Income</b></h6>
-                        <p class="text-muted">All Customs Value</p>
-                    </div>
-                    <h4 class="text-info fw-bold">$170</h4>
-                </div>
-                <div class="progress progress-sm">
-                    <div
-                        class="progress-bar bg-info w-75"
-                        role="progressbar"
-                        aria-valuenow="75"
-                        aria-valuemin="0"
-                        aria-valuemax="100"></div>
-                </div>
-                <div class="d-flex justify-content-between mt-2">
-                    <p class="text-muted mb-0">Change</p>
-                    <p class="text-muted mb-0">75%</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-12 col-sm-6 col-md-6 col-xl-3">
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h6><b>Total Revenue</b></h6>
-                        <p class="text-muted">All Customs Value</p>
-                    </div>
-                    <h4 class="text-success fw-bold">$120</h4>
-                </div>
-                <div class="progress progress-sm">
-                    <div
-                        class="progress-bar bg-success w-25"
-                        role="progressbar"
-                        aria-valuenow="25"
-                        aria-valuemin="0"
-                        aria-valuemax="100"></div>
-                </div>
-                <div class="d-flex justify-content-between mt-2">
-                    <p class="text-muted mb-0">Change</p>
-                    <p class="text-muted mb-0">25%</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-12 col-sm-6 col-md-6 col-xl-3">
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h6><b>New Orders</b></h6>
-                        <p class="text-muted">Fresh Order Amount</p>
-                    </div>
-                    <h4 class="text-danger fw-bold">15</h4>
-                </div>
-                <div class="progress progress-sm">
-                    <div
-                        class="progress-bar bg-danger w-50"
-                        role="progressbar"
-                        aria-valuenow="50"
-                        aria-valuemin="0"
-                        aria-valuemax="100"></div>
-                </div>
-                <div class="d-flex justify-content-between mt-2">
-                    <p class="text-muted mb-0">Change</p>
-                    <p class="text-muted mb-0">50%</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-12 col-sm-6 col-md-6 col-xl-3">
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h6><b>New Users</b></h6>
-                        <p class="text-muted">Joined New User</p>
-                    </div>
-                    <h4 class="text-secondary fw-bold">12</h4>
-                </div>
-                <div class="progress progress-sm">
-                    <div
-                        class="progress-bar bg-secondary w-25"
-                        role="progressbar"
-                        aria-valuenow="25"
-                        aria-valuemin="0"
-                        aria-valuemax="100"></div>
-                </div>
-                <div class="d-flex justify-content-between mt-2">
-                    <p class="text-muted mb-0">Change</p>
-                    <p class="text-muted mb-0">25%</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
+
+
+
 
 <?php
 require 'afooter.php';

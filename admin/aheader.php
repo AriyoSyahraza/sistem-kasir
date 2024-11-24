@@ -39,8 +39,10 @@
   <link rel="stylesheet" href="../assets/css/plugins.min.css" />
   <link rel="stylesheet" href="../assets/css/kaiadmin.min.css" />
 
-  <!-- CSS Just for demo purpose, don't include it in your project -->
-  <link rel="stylesheet" href="../assets/css/demo.css" />
+  <!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.7/css/buttons.dataTables.min.css">
+
 </head>
 
 <body>
