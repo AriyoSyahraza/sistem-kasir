@@ -143,6 +143,19 @@
               </a>
             </li>
             <li class="nav-item 
+            <?php if ($title == 'Laporan Keuangan') {
+              echo 'active';
+            } ?>">
+              <a
+
+                href="laporan_keuangan.php"
+                aria-expanded="true">
+                <i class="fas fa-users"></i>
+                <p>Laporan Keuangan</p>
+
+              </a>
+            </li>
+            <li class="nav-item 
             <?php if ($title == 'Discount') {
               echo 'active';
             } ?>">

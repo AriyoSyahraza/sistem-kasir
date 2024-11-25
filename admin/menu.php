@@ -1,7 +1,29 @@
 <?php
-// require 'koneksi.php';
+require 'koneksi.php';
 $title = 'Menu';
 require 'aheader.php';
+
+$query = "
+    SELECT 
+        *
+    FROM 
+        menu_items 
+        WHERE status = 'active'
+    ORDER BY 
+        type ASC, name ASC;
+";
+
+$result = mysqli_query($conn, $query);
+
+if (!$result) {
+    die("Error pada query: " . mysqli_error($conn));
+}
+
+$data = [];
+while ($row = mysqli_fetch_assoc($result)) {
+    $data[] = $row;
+}
+
 ?>
 
 <div class="page-header">
@@ -13,9 +35,11 @@ require 'aheader.php';
 <div class="container my-5">
     <!-- Tombol Create Menu -->
     <div class="text-end mb-3">
-        <button class="btn btn-primary">
-            <i class="fas fa-plus"></i> Create Menu
-        </button>
+        <a href="menu_create.php">
+            <button class="btn btn-primary">
+                <i class="fas fa-plus"></i> Create Menu
+            </button>
+        </a>
     </div>
 
     <!-- Navpills -->
@@ -37,79 +61,98 @@ require 'aheader.php';
         <!-- Food Section -->
         <div class="tab-pane fade show active" id="pills-food" role="tabpanel" aria-labelledby="pills-food-tab">
             <div class="row g-4">
-                <?php
-                $foods = [
-                    ['img' => 'food1.jpg', 'name' => 'Burger', 'price' => 'Rp 25.000'],
-                    ['img' => 'food2.jpg', 'name' => 'Pizza', 'price' => 'Rp 50.000'],
-                    ['img' => 'food3.jpg', 'name' => 'Pasta', 'price' => 'Rp 30.000'],
-                    ['img' => 'food4.jpg', 'name' => 'Salad', 'price' => 'Rp 20.000'],
-                    ['img' => 'food5.jpg', 'name' => 'Sushi', 'price' => 'Rp 40.000'],
-                    ['img' => 'food6.jpg', 'name' => 'Steak', 'price' => 'Rp 70.000']
-                ];
-                foreach ($foods as $food) {
-                    echo "
-                        <div class='col-md-4'>
-                            <div class='card'>
-                                <img src='images/{$food['img']}' class='card-img-top' alt='{$food['name']}'>
-                                <div class='card-body'>
-                                    <h5 class='card-title'>{$food['name']}</h5>
-                                    <p class='card-text'>{$food['price']}</p>
-                                    <div class='d-flex justify-content-between'>
-                                        <button class='btn btn-warning btn-sm'>
-                                            <i class='fas fa-edit'></i> Edit
-                                        </button>
-                                        <button class='btn btn-danger btn-sm'>
-                                            <i class='fas fa-trash'></i> Hapus
-                                        </button>
+                <?php foreach ($data as $item): ?>
+                    <?php if ($item['type'] === 'food'): ?>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-body d-flex justify-content-between">
+                                    <div>
+                                        <h5 class="card-title"><?= $item['name']; ?></h5>
+                                        <p class="card-text">Rp <?= number_format($item['price'], 0, ',', '.'); ?></p>
                                     </div>
+                                    <div>
+                                        <span class="badge bg-success">Redeem <?= $item['redeemable_points']; ?> Points</span>
+                                    </div>
+                                </div>
+                                <div class="card-footer d-flex justify-content-between">
+
+                                    <a href="menu_edit.php?id=<?= $item['menu_item_id']; ?>" class="btn btn-warning btn-sm">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <a href="javascript:void(0)" onclick="deleteMenu(<?= $item['menu_item_id']; ?>)" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash"></i> Hapus
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                    ";
-                }
-                ?>
+                    <?php endif; ?>
+                <?php endforeach; ?>
             </div>
         </div>
 
         <!-- Beverage Section -->
         <div class="tab-pane fade" id="pills-beverage" role="tabpanel" aria-labelledby="pills-beverage-tab">
             <div class="row g-4">
-                <?php
-                $beverages = [
-                    ['img' => 'beverage1.jpg', 'name' => 'Coffee', 'price' => 'Rp 15.000'],
-                    ['img' => 'beverage2.jpg', 'name' => 'Tea', 'price' => 'Rp 10.000'],
-                    ['img' => 'beverage3.jpg', 'name' => 'Smoothie', 'price' => 'Rp 20.000'],
-                    ['img' => 'beverage4.jpg', 'name' => 'Juice', 'price' => 'Rp 12.000'],
-                    ['img' => 'beverage5.jpg', 'name' => 'Milkshake', 'price' => 'Rp 18.000'],
-                    ['img' => 'beverage6.jpg', 'name' => 'Soda', 'price' => 'Rp 8.000']
-                ];
-                foreach ($beverages as $beverage) {
-                    echo "
-                        <div class='col-md-4'>
-                            <div class='card'>
-                                <img src='images/{$beverage['img']}' class='card-img-top' alt='{$beverage['name']}'>
-                                <div class='card-body'>
-                                    <h5 class='card-title'>{$beverage['name']}</h5>
-                                    <p class='card-text'>{$beverage['price']}</p>
-                                    <div class='d-flex justify-content-between'>
-                                        <button class='btn btn-warning btn-sm'>
-                                            <i class='fas fa-edit'></i> Edit
-                                        </button>
-                                        <button class='btn btn-danger btn-sm'>
-                                            <i class='fas fa-trash'></i> Hapus
-                                        </button>
+                <?php foreach ($data as $item): ?>
+                    <?php if ($item['type'] === 'beverage'): ?>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-body d-flex justify-content-between">
+                                    <div>
+                                        <h5 class="card-title"><?= $item['name']; ?></h5>
+                                        <p class="card-text">Rp <?= number_format($item['price'], 0, ',', '.'); ?></p>
                                     </div>
+                                    <div>
+                                        <span class="badge bg-success">Redeem <?= $item['redeemable_points']; ?> Points</span>
+                                    </div>
+                                </div>
+                                <div class="card-footer d-flex justify-content-between">
+                                    <a href="menu_edit.php?id=<?= $item['menu_item_id']; ?>" class="btn btn-warning btn-sm">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <a href="javascript:void(0)" onclick="deleteMenu(<?= $item['menu_item_id']; ?>)" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash"></i> Hapus
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                    ";
-                }
-                ?>
+                    <?php endif; ?>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function deleteMenu(id) {
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: "Menu ini akan dihapus!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Ya, Hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirect ke halaman delete dengan parameter ID
+                window.location = `menu_delete.php?id=${id}`;
+            }
+        });
+    }
+</script>
+
+<?php if (isset($_GET['message'])): ?>
+    <script>
+        Swal.fire({
+            title: "<?= $_GET['message'] === 'deleted' ? 'Berhasil!' : 'Gagal!'; ?>",
+            text: "<?= $_GET['message'] === 'deleted' ? 'Menu berhasil dinonaktifkan.' : 'Terjadi kesalahan, coba lagi.'; ?>",
+            icon: "<?= $_GET['message'] === 'deleted' ? 'success' : 'error'; ?>"
+        });
+    </script>
+<?php endif; ?>
 
 
 <?php

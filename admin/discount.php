@@ -13,9 +13,12 @@ require 'aheader.php';
 <div class="container my-5">
     <!-- Tombol Tambah Discount -->
     <div class="text-end mb-3">
+        <a href="discount_create.php">
         <button class="btn btn-primary">
+
             <i class="fas fa-plus"></i> Tambah Discount
         </button>
+        </a>
     </div>
 
     <!-- Filter Tanggal -->

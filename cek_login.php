@@ -50,10 +50,11 @@ if ($cek > 0) {
        
 
         header('location:admin');
-    } else if ($data['level'] == 'pegawai') {
-        $_SESSION['level'] = 'pegawai';
+    } else if ($data['level'] == 'cashier') {
+        $_SESSION['level'] = 'cashier';
         $_SESSION['username'] = $data['username'];
-       
+        $_SESSION['user_id'] = $data['user_id'];
+
         
 
         header('location:cashier');

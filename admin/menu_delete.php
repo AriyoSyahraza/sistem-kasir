@@ -1,17 +1,23 @@
 <?php
-// require 'koneksi.php';
-$title = 'Menu';
-require 'aheader.php';
-?>
+require 'koneksi.php'; // Pastikan koneksi ke database
 
-<div class="page-header">
-    <h1 class="fw-bold mb-3">
-        <?= $title; ?>
-    </h1>
-</div>
+// Ambil ID dari parameter URL
+$id = $_GET['id'] ?? null;
 
+if (!$id) {
+    // Jika ID tidak ditemukan, redirect ke halaman menu
+    header("Location: menu.php");
+    exit();
+}
 
-
-<?php
-require 'afooter.php';
-?>
+// Update status menu menjadi inactive
+$query = "UPDATE menu_items SET status = 'inactive' WHERE menu_item_id = $id";
+if (mysqli_query($conn, $query)) {
+    // Redirect kembali ke halaman menu dengan pesan sukses
+    header("Location: menu.php?message=deleted");
+    exit();
+} else {
+    // Redirect kembali dengan pesan error
+    header("Location: menu.php?message=error");
+    exit();
+}
