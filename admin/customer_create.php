@@ -1,19 +1,22 @@
 <?php
-// require 'koneksi.php';
+require 'koneksi.php';
 $title = 'Tambah Customer';
 
-if (isset($_POST['btn-simpan'])) {
-    $nama = $_POST['nama'];
-    
-    $query = "INSERT INTO costumer (nama) values ('$nama')";
+if (isset($_POST['submit'])) {
+    $nama = $_POST['name'];
+    $telp = $_POST['phone_number'];
+    $points = $_POST['points'];
+    $status = $_POST['status']; 
+
+    $query = "INSERT INTO customers (name, phone_number, points, status ) values ('$nama', '$telp', '$points', '$status')";
 
     $insert = mysqli_query($conn, $query);
     if ($insert == 1) {
         $_SESSION['msg'] = 'Berhasil menambahkan pelanggan baru';
-        header('location:pelanggan.php?');
+        header('location:customer.php?');
     } else {
         $_SESSION['msg'] = 'Gagal menambahkan data baru!!!';
-        header('location: pelanggan.php');
+        header('location: customer.php');
     }
 }
 
@@ -56,44 +59,48 @@ require 'aheader.php';
                   <div class="card-header">
                     <div class="card-title">Judul Form</div>
                   </div>
-                  <div class="card-body">
-                    <div class="row">
-                      
-                      <div class="col-md-6 col-lg-4">
-                        
-                        
-
-                        <div class="form-group">
-                          <label for="largeInput">Nama</label>
-                          <input
-                            type="text"
-                            class="form-control form-control"
-                            id="defaultInput"
-                            placeholder="Default Input"
-                          />
-                        </div>
-                        <div class="form-group">
-                          <label for="defaultSelect">Pilihan</label>
-                          <select
-                            class="form-select form-control"
-                            id="defaultSelect"
-                          >
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                          </select>
-                        </div>
-                      </div>
+                  <div class="row">
+            <div class="col-md-10">
+                <div class="card card-default">
+                    <div class="card-header">
+                        <div class="card-title"><?= $title; ?></div>
                     </div>
-                  </div>
-                  <div class="card-action">
-                    <button class="btn btn-success" name="btn-simpan">Submit</button>
-                  </div>
+                    <form action="" method="POST">
+                        
+                            
+                            
+                            
+                            <div class="form-group">
+                                <label for="largeInput">Nama</label>
+                                <input type="text" name="name" class="form-control form-control" id="defaultInput" placeholder="Nama...">
+                            </div>
+                            <div class="form-group">
+                                <label for="largeInput">No telepon</label>
+                                <input type="text" name="phone_number" class="form-control form-control" id="defaultInput" placeholder="No. Telp">
+                            </div>
+                            <div class="form-group">
+                                <label for="largeInput">Points</label>
+                                <input type="text" name="points" class="form-control form-control" id="defaultInput" placeholder="Points...">
+                            </div>
+                            <div class="form-group">
+                                <label for="defaultSelect">Status</label>
+                                <select name="status" class="form-control" id="defaultSelect">
+                                    <option value="active">Aktif</option>
+                                    <option value="inactive">Tidak Aktif</option>
+                                </select>
+                            </div>
+
+                  
+                            
+                        
+                            <div class="card-action">
+                                <button type="submit" name="submit" class="btn btn-success">Submit</button>
+                                <!-- <a href="javascript:void(0)" onclick="window.history.back();" class="btn btn-danger">Batal</a> -->
+                            </div>
+                    </form>
                 </div>
-              </div>
             </div>
+        </div>
 
 <?php
 require 'afooter.php';

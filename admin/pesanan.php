@@ -73,13 +73,13 @@ require 'aheader.php';
                            
                             <td>
                                 <div class="form-button-action">
-                                    <a href="detail_staff.php?id=<?= $plg['customer_id']; ?>" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Detail">
+                                    <a href="detail_order.php?id=<?= $plg['order_id']; ?>" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Detail">
                                         <i class="fa fa-info-circle"></i>
                                     </a>
-                                    <a href="edit_staff.php?id=<?= $plg['customer_id']; ?>" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit">
+                                    <a href="pesanan_edit.php?id=<?= $plg['order_id']; ?>" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <a href="hapus_staff.php?id=<?= $plg['customer_id']; ?>" onclick="return confirm('Are you sure you want to deactivate this staff?');" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Hapus">
+                                    <a href="pesanan_delete.php?order_id=<?= $plg['order_id']; ?>" onclick="return confirm('Yakin mau menghapus orderan ini?');" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Hapus">
                                         <i class="fa fa-times"></i>
                                     </a>
                                 </div>

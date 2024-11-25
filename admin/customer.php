@@ -57,13 +57,13 @@ require 'aheader.php';
                             <td><?= $plg['status']; ?></td>
                             <td>
                                 <div class="form-button-action">
-                                    <a href="detail_staff.php?id=<?= $plg['customer_id']; ?>" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Detail">
+                                    <a href="customer_detail.php?id=<?= $plg['customer_id']; ?>" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Detail">
                                         <i class="fa fa-info-circle"></i>
                                     </a>
-                                    <a href="edit_staff.php?id=<?= $plg['customer_id']; ?>" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit">
+                                    <a href="customer_edit.php?id=<?= $plg['customer_id']; ?>" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <a href="hapus_staff.php?id=<?= $plg['customer_id']; ?>" onclick="return confirm('Are you sure you want to deactivate this staff?');" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Hapus">
+                                    <a href="customer_delete.php?customer_id=<?= $plg['customer_id']; ?>" onclick="return confirm('Are you sure you want to deactivate this staff?');" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Hapus">
                                         <i class="fa fa-times"></i>
                                     </a>
                                 </div>
