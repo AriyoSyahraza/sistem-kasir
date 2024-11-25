@@ -20,9 +20,12 @@ require 'aheader.php';
 <div class="container my-5">
     <!-- Tombol Tambah Customer -->
     <div class="text-end mb-3">
-        <button class="btn btn-primary">
+        <!-- <button class="btn btn-primary" >
             <i class="fas fa-plus"></i> Tambah Customer
-        </button>
+        </button> -->
+        <a href="customer_create.php" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Tambah Customer
+        </a>
     </div>
 
     <!-- Tabel Customer -->
@@ -34,6 +37,7 @@ require 'aheader.php';
                     <th>Nama Customer</th>
                     <th>No HP</th>
                     <th>Poin</th>
+                    <th>Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
