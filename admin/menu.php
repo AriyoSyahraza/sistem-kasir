@@ -1,7 +1,6 @@
 <?php
 require 'koneksi.php';
 $title = 'Menu';
-require 'koneksi.php';
 
 $query = 'SELECT * FROM menu_items';
 $data = mysqli_query($conn, $query);
@@ -47,13 +46,18 @@ while ($row = mysqli_fetch_assoc($result)) {
     </div>
 
     <!-- Navpills -->
+    <!-- Navpills -->
     <ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="pills-food-tab" data-bs-toggle="pill" data-bs-target="#pills-food" type="button" role="tab" aria-controls="pills-food" aria-selected="true">
-                <i class="fas fa-utensils"></i> Menu
+                <i class="fas fa-utensils"></i> Food
             </button>
         </li>
-        
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pills-beverage-tab" data-bs-toggle="pill" data-bs-target="#pills-beverage" type="button" role="tab" aria-controls="pills-beverage" aria-selected="false">
+                <i class="fas fa-coffee"></i> Beverage
+            </button>
+        </li>
     </ul>
 
     <!-- Tab Content -->
@@ -107,6 +111,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                                     </div>
                                 </div>
                                 <div class="card-footer d-flex justify-content-between">
+                                    
                                     <a href="menu_edit.php?id=<?= $item['menu_item_id']; ?>" class="btn btn-warning btn-sm">
                                         <i class="fas fa-edit"></i> Edit
                                     </a>
@@ -122,6 +127,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         </div>
     </div>
 </div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
