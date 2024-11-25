@@ -1,7 +1,19 @@
 <?php
-// require 'koneksi.php';
+require 'koneksi.php';
 $title = 'Discount';
 require 'aheader.php';
+
+// Query untuk mengambil data dari tabel discount
+$query = "SELECT * FROM discount ORDER BY discount_id ASC";
+$result = mysqli_query($conn, $query);
+
+if (!$result) {
+    die("Error pada query: " . mysqli_error($conn));
+}
+
+// Simpan data
+$discounts = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
 ?>
 
 <div class="page-header">
@@ -40,35 +52,34 @@ require 'aheader.php';
 
     <!-- Tabel Discount -->
     <div class="table-responsive">
-        <table id="multi-filter-select" class="table table-bordered">
-            <thead class="bg-dark text-white">
-                <tr>
-                    <th>No</th>
-                    <th>Start</th>
-                    <th>Nama Discount</th>
-                    <th>Percentage</th>
-                    <th>Usage</th>
-                    <th>Range (Days)</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                $discounts = [
-                    ['no' => 1, 'name' => 'Holiday Sale', 'percentage' => 20, 'usage' => 50, 'range' => 7, 'start' => '2024-11-25'],
-                    ['no' => 2, 'name' => 'Black Friday', 'percentage' => 50, 'usage' => 120, 'range' => 3, 'start' => '2024-11-22'],
-                    ['no' => 3, 'name' => 'Weekend Special', 'percentage' => 30, 'usage' => 80, 'range' => 2, 'start' => '2024-11-23'],
-                ];
-
+    <table id="multi-filter-select" class="table table-bordered">
+        <thead class="bg-dark text-white">
+            <tr>
+                <th>No</th>
+                <th>Start</th>
+                <th>Nama Discount</th>
+                <th>Percentage</th>
+                <th>Usage</th>
+                <th>Range (Days)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            if (!empty($discounts)) {
+                $no = 1; // Counter untuk nomor
                 foreach ($discounts as $discount) {
+                    // Tambahkan kelas 'table-warning' jika status adalah 'inactive'
+                    $rowClass = $discount['status'] === 'inactive' ? 'table-warning' : '';
+                    
                     echo "
-                    <tr>
-                        <td>{$discount['no']}</td>
-                        <td>{$discount['start']}</td>
+                    <tr class='{$rowClass}'>
+                        <td>{$no}</td>
+                        <td>" . date('D, d M Y', strtotime($discount['start_date'])) . "</td>
                         <td>{$discount['name']}</td>
                         <td>{$discount['percentage']}%</td>
                         <td>{$discount['usage']}</td>
-                        <td>{$discount['range']} days</td>
+                        <td>{$discount['range_days']} days</td>
                         <td>
                             <div class='d-flex justify-content-around'>
                                 <button class='btn btn-info btn-sm'>
@@ -84,11 +95,19 @@ require 'aheader.php';
                         </td>
                     </tr>
                     ";
+                    $no++; // Increment nomor
                 }
-                ?>
-            </tbody>
-        </table>
-    </div>
+            } else {
+                echo "
+                <tr>
+                    <td colspan='7' class='text-center text-muted'>Tidak ada diskon yang tersedia.</td>
+                </tr>
+                ";
+            }
+            ?>
+        </tbody>
+    </table>
+</div>
 </div>
 
 
