@@ -1,6 +1,6 @@
 <?php
 // require 'koneksi.php';
-$title = 'Menu';
+$title = 'Pesanan';
 require 'koneksi.php';
 
 
