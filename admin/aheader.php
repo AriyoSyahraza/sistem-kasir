@@ -1,7 +1,7 @@
 <?php
 
 
-
+require 'koneksi.php';
 $query = "SELECT username FROM user WHERE user_id = '{$_SESSION['user_id']}'"
   
 ?>
