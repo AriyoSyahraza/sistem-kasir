@@ -11,7 +11,7 @@ $query = "SELECT username FROM user WHERE user_id = '{$_SESSION['user_id']}'"
 
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Kaiadmin - Bootstrap 5 Admin Dashboard</title>
+  <title></title>
   <meta
     content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     name="viewport" />
@@ -228,9 +228,7 @@ $query = "SELECT username FROM user WHERE user_id = '{$_SESSION['user_id']}'"
                   class="dropdown-menu notif-box animated fadeIn"
                   aria-labelledby="notifDropdown">
                   <li>
-                    <div class="dropdown-title">
-                      You have 4 new notification
-                    </div>
+                    
                   </li>
                   <li>
                     
