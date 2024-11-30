@@ -14,6 +14,9 @@ $result_kasir = mysqli_query($conn, $query_kasir);
 $query_diskon = "SELECT discount_id, name FROM discount";
 $result_diskon = mysqli_query($conn, $query_diskon);
 
+$query_menu = "SELECT menu_item_id, name, price, stok FROM menu_items";
+$result_menu = mysqli_query($conn, $query_menu);
+
 if (isset($_POST['submit'])) {
 
     $customer_id = $_POST['customer_id'];
@@ -36,9 +39,9 @@ if (isset($_POST['submit'])) {
 
     $count_incre = 1;
 
-    while($count_incre < 3){
-        $menu_id = $count_incre;
-        $quantity = 1;
+    while($count_incre < $jumlah_menu){
+        $menu_id = $_POST["menu_id{$count_incre}"];;
+        $quantity = $_POST["quantity{$count_incre}"];
         $price = $_POST["price{$count_incre}"];
 
         if($quantity > 0){
@@ -62,7 +65,7 @@ $discount_id = $_POST['discount_id'];
 
 // Redirect ke halaman tambah order item dengan ID order terbaru
 // $order_id = $conn->insert_id; // Ambil ID order terakhir
-header("Location: tambah_order_item.php?order_id=$id_order");
+header("Location: pesanan.php");
 
   }
 
@@ -145,31 +148,68 @@ require 'aheader.php';
                                     <?php } ?>
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label for="largeInput">Menu 1</label>
-                                <input type="text" name="price1" class="form-control form-control" id="defaultInput" placeholder="Harga Menu 1...">
-                            </div>
-                            <div class="form-group">
-                                <label for="largeInput">Menu 2</label>
-                                <input type="text" name="price2" class="form-control form-control" id="defaultInput" placeholder="Harga Menu 2...">
-                            </div>
-                            <div class="form-group">
-                                <label for="largeInput">Total</label>
-                                <input type="text" name="total_amount" class="form-control form-control" id="defaultInput" placeholder="Total...">
-                            </div>
-                  
                             
-                        
+                            <div class="form-group">
+                                <label for="menu_list">Daftar Menu</label>
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Nama Menu</th>
+                                            <th>Harga</th>
+                                            <th>Jumlah</th>
+                                            <th>Stok</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="menuTable">
+                                        <?php while ($row = mysqli_fetch_assoc($result_menu)) { ?>
+                                            <tr>
+                                                <td><?= $row['name'] ?></td>
+                                                <td id="price<?= $row['menu_item_id'] ?>"><?= $row['price'] ?></td>
+                                                <td>
+                                                    <input type="number" id="quantity<?= $row['menu_item_id'] ?>" class="form-control quantity" 
+                                                          data-price="<?= $row['price'] ?>" value="0" min="0" style="width: 100px;">
+                                                </td>
+                                                <td><?= $row['stok']?></td>
+                                                <td>
+                                                    <button type="button" class="btn btn-primary addMenu" data-id="<?= $row['menu_item_id'] ?>" 
+                                                            data-name="<?= $row['name'] ?>" data-price="<?= $row['price'] ?>">Tambah</button>
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="form-group">
+                                <label for="orderList">Pesanan</label>
+                                <table class="table table-bordered" id="orderList">
+                                    <thead>
+                                        <tr>
+                                            <th>Nama Menu</th>
+                                            <th>Jumlah</th>
+                                            <th>Subtotal</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Pesanan akan ditambahkan di sini -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="form-group">
+                                <label for="totalAmount">Total</label>
+                                <input type="text" name="total_amount" id="totalAmount" class="form-control" readonly>
+                            </div> 
                             <div class="card-action">
-                                <button type="submit" name="submit" class="btn btn-success">Submit</button>
+                                  <button type="submit" name="submit" class="btn btn-success">Submit</button>
                                 <!-- <a href="javascript:void(0)" onclick="window.history.back();" class="btn btn-danger">Batal</a> -->
                             </div>
-                    </form>
+                       </form>
+                    </div>
+                   </div>
                 </div>
-            </div>
-        </div>
-              </div>
-            </div> 
+           </div>
+      </div> 
              
 
 

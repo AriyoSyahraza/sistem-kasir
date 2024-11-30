@@ -112,6 +112,62 @@
         });
     });
 </script>
+
+<script>
+    let totalAmount = 0;
+
+    // Tambah menu ke daftar pesanan
+    document.querySelectorAll('.addMenu').forEach(button => {
+        button.addEventListener('click', function () {
+            const id = this.getAttribute('data-id');
+            const name = this.getAttribute('data-name');
+            const price = parseInt(this.getAttribute('data-price'));
+            const quantity = parseInt(document.getElementById(`quantity${id}`).value);
+
+            if (quantity > 0) {
+                const subtotal = price * quantity;
+
+                // Cek apakah item sudah ada
+                const existingRow = document.querySelector(`#orderList tr[data-id="${id}"]`);
+                if (existingRow) {
+                    const qtyField = existingRow.querySelector('.orderQuantity');
+                    const subtotalField = existingRow.querySelector('.orderSubtotal');
+                    const currentQty = parseInt(qtyField.textContent);
+                    const newQty = currentQty + quantity;
+                    qtyField.textContent = newQty;
+                    subtotalField.textContent = price * newQty;
+                } else {
+                    // Tambah item ke tabel pesanan
+                    const row = `<tr data-id="${id}">
+                        <td>${name}</td>
+                        <td class="orderQuantity">${quantity}</td>
+                        <td class="orderSubtotal">${subtotal}</td>
+                        <td><button type="button" class="btn btn-danger removeMenu">Hapus</button></td>
+                    </tr>`;
+                    document.querySelector('#orderList tbody').insertAdjacentHTML('beforeend', row);
+                }
+
+                // Update total
+                totalAmount += subtotal;
+                document.getElementById('totalAmount').value = totalAmount;
+
+                // Tambahkan event listener untuk tombol hapus
+                document.querySelectorAll('.removeMenu').forEach(btn => {
+                    btn.addEventListener('click', function () {
+                        const row = this.closest('tr');
+                        const rowSubtotal = parseInt(row.querySelector('.orderSubtotal').textContent);
+                        totalAmount -= rowSubtotal;
+                        document.getElementById('totalAmount').value = totalAmount;
+                        row.remove();
+                    });
+                });
+            } else {
+                alert("Jumlah harus lebih dari 0!");
+            }
+        });
+    });
+</script>
+
 </body>
 
 </html>
