@@ -3,7 +3,7 @@
 $title = 'Pesanan';
 require 'koneksi.php';
 
-$query = 'SELECT * FROM orders ORDER BY order_id ASC ';
+$query = 'SELECT * FROM orders ORDER BY order_date DESC ';
 $data = mysqli_query($conn, $query);
 
 

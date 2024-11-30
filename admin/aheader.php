@@ -1,6 +1,6 @@
 <?php
 
-
+require 'koneksi.php';
 
 $query = "SELECT username FROM user WHERE user_id = '{$_SESSION['user_id']}'"
   
@@ -212,7 +212,7 @@ $query = "SELECT username FROM user WHERE user_id = '{$_SESSION['user_id']}'"
             <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
               
               
-              <li class="nav-item topbar-icon dropdown hidden-caret">
+              <!-- <li class="nav-item topbar-icon dropdown hidden-caret">
                 <a
                   class="nav-link dropdown-toggle"
                   href="#"
@@ -234,12 +234,12 @@ $query = "SELECT username FROM user WHERE user_id = '{$_SESSION['user_id']}'"
                     
                     
                   </li>
-                  <!-- <li>
+                   <li>
                     <a class="see-all" href="javascript:void(0);">See all notifications<i class="fa fa-angle-right"></i>
                     </a>
-                  </li> -->
+                  </li> 
                 </ul>
-              </li>
+              </li> -->
               
 
               <li class="nav-item topbar-user dropdown hidden-caret">
@@ -248,12 +248,7 @@ $query = "SELECT username FROM user WHERE user_id = '{$_SESSION['user_id']}'"
                   data-bs-toggle="dropdown"
                   href="#"
                   aria-expanded="false">
-                  <div class="avatar-sm">
-                    <img
-                      src="assets/img/profile.jpg"
-                      alt="..."
-                      class="avatar-img rounded-circle" />
-                  </div>
+                  
                   <span class="profile-username">
                     <span class="op-7">Hi,</span>
                     <span class="fw-bold"><?= $_SESSION['username']; ?></span>
@@ -263,15 +258,10 @@ $query = "SELECT username FROM user WHERE user_id = '{$_SESSION['user_id']}'"
                   <div class="dropdown-user-scroll scrollbar-outer">
                     <li>
                       <div class="user-box">
-                        <div class="avatar-lg">
-                          <img
-                            src="assets/img/profile.jpg"
-                            alt="image profile"
-                            class="avatar-img rounded" />
-                        </div>
+                        
                         <div class="u-text">
                           <h4><?= $_SESSION['username']; ?></h4>
-                          <p class="text-muted">hello@example.com</p>
+                          
                           
                         </div>
                       </div>
