@@ -1,5 +1,8 @@
 <?php
 
+
+require 'koneksi.php';
+$query = "SELECT username FROM user WHERE user_id = '{$_SESSION['user_id']}'"
   
 ?>
 
@@ -8,7 +11,7 @@
 
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Kaiadmin - Bootstrap 5 Admin Dashboard</title>
+  <title></title>
   <meta
     content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     name="viewport" />
@@ -225,9 +228,7 @@
                   class="dropdown-menu notif-box animated fadeIn"
                   aria-labelledby="notifDropdown">
                   <li>
-                    <div class="dropdown-title">
-                      You have 4 new notification
-                    </div>
+                    
                   </li>
                   <li>
                     
@@ -255,7 +256,7 @@
                   </div>
                   <span class="profile-username">
                     <span class="op-7">Hi,</span>
-                    <span class="fw-bold">kenang</span>
+                    <span class="fw-bold"><?= $_SESSION['username']; ?></span>
                   </span>
                 </a>
                 <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -269,7 +270,7 @@
                             class="avatar-img rounded" />
                         </div>
                         <div class="u-text">
-                          <h4>Hizrian</h4>
+                          <h4><?= $_SESSION['username']; ?></h4>
                           <p class="text-muted">hello@example.com</p>
                           
                         </div>

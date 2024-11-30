@@ -105,7 +105,7 @@ require 'aheader.php';
                   <div class="card-header">
                     <div class="card-title">Judul Form</div>
                   </div>
-                  <div class="row">
+          <div class="row">
             <div class="col-md-10">
                 <div class="card card-default">
                     <div class="card-header">
