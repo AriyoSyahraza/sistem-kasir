@@ -154,7 +154,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     <script>
         Swal.fire({
             title: "<?= $_GET['message'] === 'deleted' ? 'Berhasil!' : 'Gagal!'; ?>",
-            text: "<?= $_GET['message'] === 'deleted' ? 'Menu berhasil dinonaktifkan.' : 'Terjadi kesalahan, coba lagi.'; ?>",
+            text: "<?= $_GET['message'] === 'deleted' ? 'Menu berhasil dihapus.' : 'Terjadi kesalahan, coba lagi.'; ?>",
             icon: "<?= $_GET['message'] === 'deleted' ? 'success' : 'error'; ?>"
         });
     </script>

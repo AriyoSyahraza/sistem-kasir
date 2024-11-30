@@ -1,96 +1,62 @@
 <?php
-// require 'koneksi.php';
-$title = 'Discount';
 require 'koneksi.php';
-require 'aheader.php';
+$title = 'Discount';
 
 if (isset($_POST['submit'])) {
     $nama_discount = $_POST['nama_discount'];
     $percent = $_POST['percent'];
     $range = $_POST['range'];
     $date = $_POST['date'];
-
+    
     // Query untuk menyimpan data
-    $sql = mysqli_query($conn, "INSERT INTO discount(name, percentage, range_days, applied_at) 
-            VALUES('$nama_discount', $percent, $range, '$date')");
+    $sql = "INSERT INTO discount(name, percentage, range_days, applied_at) 
+            VALUES('$nama_discount', $percent, $range, '$date')";
 
-    if ($conn->query($sql) === TRUE) {
-        $message = "Data berhasil disimpan!";
-    } else {
-        $message = "Error: " . $sql . "<br>" . $conn->error;
-    }
+if (mysqli_query($conn, $sql)) {
+  // Redirect ke halaman discount dengan status sukses
+  header("Location: discount.php?status=success&message=" . urlencode("Diskon berhasil ditambahkan."));
+  exit();
+} else {
+  // Redirect ke halaman discount dengan status error
+  $error_message = urlencode(mysqli_error($conn));
+  header("Location: discount.php?status=error&message=$error_message");
+  exit();
 }
+}
+require 'aheader.php';
 ?>
 
 <div class="page-header">
-    <h1 class="fw-bold mb-3">
-        <?= $title; ?>
-    </h1>
+  <h1 class="fw-bold mb-3">
+    <?= $title; ?>
+  </h1>
 </div>
 
-<div class="row">
-  <div class="col-md-12">
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">Form Input</div>
-      </div>
-      <form action="" method="POST">
-        <div class="card-body">
-          <div class="form-group">
-            <label for="nama_discount">Nama Discount</label>
-            <input
-              type="text"
-              class="form-control"
-              id="nama_discount"
-              name="nama_discount"
-              placeholder="Masukkan Nama"
-              required
-            />
-          </div>
-          
-          <div class="form-group">
-            <label for="percent">Presentase</label>
-            <input
-              type="number"
-              class="form-control"
-              id="percent"
-              name="percent"
-              placeholder="Masukkan Jumlah presentase"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label for="range">Rentang Waktu</label>
-            <input
-              type="number"
-              class="form-control"
-              id="range"
-              name="range"
-              placeholder="Masukkan Rentang Waktu"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label for="date">Tanggal Aplikasi Discount</label>
-            <input
-              type="date"
-              class="form-control"
-              id="date"
-              name="date"
-              required
-            />
-          </div>
+<div class="container my-5">
+    <form action="" method="POST">
+        <div class="mb-3">
+            <label for="nama_discount" class="form-label">Nama Discount</label>
+            <input type="text" class="form-control" id="nama_discount" name="nama_discount" required>
         </div>
-        <div class="card-action">
-          <button type="submit" name="submit" class="btn btn-success">Submit</button>
+
+        <div class="mb-3">
+            <label for="percent" class="form-label">Percentage</label>
+            <input type="number" class="form-control" id="percent" name="percent" required>
         </div>
-      </form>
-    </div>
-  </div>
+
+        <div class="mb-3">
+            <label for="range" class="form-label">Range (Days)</label>
+            <input type="number" class="form-control" id="range" name="range" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="date" class="form-label">Tanggal Mulai</label>
+            <input type="date" class="form-control" id="date" name="date" required>
+        </div>
+
+        <button type="submit" name="submit" class="btn btn-success">Tambah Diskon</button>
+    </form>
 </div>
-
-
-
 
 <?php
 require 'afooter.php';

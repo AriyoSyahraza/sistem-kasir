@@ -65,7 +65,7 @@ if ($result) {
                 <tr>
                     <th>No</th>
                     <th>Date</th>
-                    <th>Total Omset</th>
+                    <th>Total Omset (Rp)</th>
 
                 </tr>
             </thead>
@@ -81,7 +81,7 @@ if ($result) {
                             
                             <td>$i</td>
                             <td>{$formatted_date}</td>
-                            <td>Rp " . number_format($row['total_amount'], 0, ',', '.') . "</td>
+                            <td>". number_format($row['total_amount'], 0, ',', '.') . "</td>
                         </tr>
                         ";
                         $i++;
