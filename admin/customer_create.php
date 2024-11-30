@@ -2,106 +2,113 @@
 require 'koneksi.php';
 $title = 'Tambah Customer';
 
-if (isset($_POST['submit'])) {
-    $nama = $_POST['name'];
-    $telp = $_POST['phone_number'];
-    $points = $_POST['points'];
-    $status = $_POST['status']; 
+$message = null; // Pesan untuk notifikasi SweetAlert
+$status = null;
 
-    $query = "INSERT INTO customers (name, phone_number, points, status ) values ('$nama', '$telp', '$points', '$status')";
-
-    $insert = mysqli_query($conn, $query);
-    if ($insert == 1) {
-        $_SESSION['msg'] = 'Berhasil menambahkan pelanggan baru';
-        header('location:customer.php?');
+// Proses penyimpanan data
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = $_POST['name'];
+    $phone_number = $_POST['phone_number'];
+    $points = $_POST['points'] ?? 0; // Default ke 0 jika kosong
+    
+    // Cek apakah nomor HP sudah ada
+    $check_query = "SELECT * FROM customers WHERE phone_number = '$phone_number'";
+    $check_result = mysqli_query($conn, $check_query);
+    
+    if (mysqli_num_rows($check_result) > 0) {
+      // Nomor HP sudah terdaftar
+      $status = 'error_demo_3_2';
+      $message = 'Nomor telepon sudah pernah terdaftar.';
     } else {
-        $_SESSION['msg'] = 'Gagal menambahkan data baru!!!';
-        header('location: customer.php');
-    }
+      // Insert data pelanggan baru
+      $insert_query = "INSERT INTO customers (name, phone_number, points, status) 
+                         VALUES ('$name', '$phone_number', $points, 'active')";
+
+if (mysqli_query($conn, $insert_query)) {
+  // Redirect dengan notifikasi sukses
+  $status = 'success_demo_3_3';
+  $message = 'Pelanggan berhasil ditambahkan.';
+} else {
+  // Redirect dengan notifikasi gagal
+  $status = 'error_demo_3_2';
+  $message = 'Gagal menambahkan pelanggan.';
 }
-
-
-
+}
+}
 require 'aheader.php';
 ?>
 
 <div class="page-header">
-    <h1 class="fw-bold mb-3">
-        <?= $title; ?>
-    </h1>
+    <h1 class="fw-bold mb-3"><?= $title; ?></h1>
 </div>
 
-<div class="page-header">
-              <h3 class="fw-bold mb-3">Forms</h3>
-              <ul class="breadcrumbs mb-3">
-                <li class="nav-home">
-                  <a href="#">
-                    <i class="icon-home"></i>
-                  </a>
-                </li>
-                <li class="separator">
-                  <i class="icon-arrow-right"></i>
-                </li>
-                <li class="nav-item">
-                  <a href="#">Forms</a>
-                </li>
-                <li class="separator">
-                  <i class="icon-arrow-right"></i>
-                </li>
-                <li class="nav-item">
-                  <a href="#">Basic Form</a>
-                </li>
-              </ul>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="card">
-                  <div class="card-header">
-                    <div class="card-title">Judul Form</div>
-                  </div>
-                  <div class="row">
-            <div class="col-md-10">
-                <div class="card card-default">
-                    <div class="card-header">
-                        <div class="card-title"><?= $title; ?></div>
-                    </div>
-                    <form action="" method="POST">
-                        
-                            
-                            
-                            
-                            <div class="form-group">
-                                <label for="largeInput">Nama</label>
-                                <input type="text" name="name" class="form-control form-control" id="defaultInput" placeholder="Nama...">
-                            </div>
-                            <div class="form-group">
-                                <label for="largeInput">No telepon</label>
-                                <input type="text" name="phone_number" class="form-control form-control" id="defaultInput" placeholder="No. Telp">
-                            </div>
-                            <div class="form-group">
-                                <label for="largeInput">Points</label>
-                                <input type="text" name="points" class="form-control form-control" id="defaultInput" placeholder="Points...">
-                            </div>
-                            <div class="form-group">
-                                <label for="defaultSelect">Status</label>
-                                <select name="status" class="form-control" id="defaultSelect">
-                                    <option value="active">Aktif</option>
-                                    <option value="inactive">Tidak Aktif</option>
-                                </select>
-                            </div>
-
-                  
-                            
-                        
-                            <div class="card-action">
-                                <button type="submit" name="submit" class="btn btn-success">Submit</button>
-                                <!-- <a href="javascript:void(0)" onclick="window.history.back();" class="btn btn-danger">Batal</a> -->
-                            </div>
-                    </form>
-                </div>
-            </div>
+<div class="container my-5">
+    <form id="customer-form" method="POST">
+        <div class="mb-3">
+            <label for="name" class="form-label">Nama Pelanggan</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Masukkan nama pelanggan" required>
         </div>
 
-<?php
-require 'afooter.php';
-?>
+        <div class="mb-3">
+            <label for="phone_number" class="form-label">Nomor HP</label>
+            <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Masukkan nomor HP" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="points" class="form-label">Poin</label>
+            <input type="number" class="form-control" id="points" name="points" placeholder="Masukkan poin (opsional)">
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <button type="button" id="submit-btn" class="btn btn-success">
+                <i class="fas fa-save"></i> Simpan
+            </button>
+            <a href="customer.php" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Kembali
+            </a>
+        </div>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.getElementById('submit-btn').addEventListener('click', function () {
+        // Konfirmasi sebelum menyimpan
+        Swal.fire({
+            title: 'Apakah data sudah benar?',
+            text: "Pastikan data yang Anda masukkan sudah sesuai!",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Simpan',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Jika konfirmasi, submit form
+                document.getElementById('customer-form').submit();
+            }
+        });
+    });
+
+    // Notifikasi SweetAlert untuk hasil proses
+    <?php if ($status === 'success_demo_3_3'): ?>
+        Swal.fire({
+            title: 'Berhasil!',
+            text: "<?= $message; ?>",
+            icon: 'success',
+            confirmButtonText: 'OK'
+        }).then(() => {
+            window.location.href = 'customer.php';
+        });
+    <?php elseif ($status === 'error_demo_3_2'): ?>
+        Swal.fire({
+            title: 'Gagal!',
+            text: "<?= $message; ?>",
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+    <?php endif; ?>
+</script>
+
+<?php require 'afooter.php'; ?>
