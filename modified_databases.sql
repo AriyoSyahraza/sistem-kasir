@@ -15,7 +15,7 @@ CREATE TABLE customers (
     customer_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(40) NOT NULL,
     phone_number VARCHAR(13) UNIQUE NOT NULL,
-    points INT DEFAULT 0,
+    points INT(4) DEFAULT 0,
     status ENUM('active', 'inactive') DEFAULT 'active'
 );
 

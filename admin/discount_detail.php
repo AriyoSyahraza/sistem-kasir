@@ -1,7 +1,6 @@
 <?php
 require 'koneksi.php';
 $title = 'Info Discount';
-require 'aheader.php';
 
 // Ambil ID dari parameter URL
 $id = $_GET['id'] ?? null;
@@ -29,13 +28,14 @@ $end_date->modify("+{$discount['range_days']} days");
 
 // Query untuk transaksi yang menggunakan diskon ini
 $order_query = "
-    SELECT o.order_id, o.order_date, o.total_amount 
-    FROM orders o 
-    WHERE o.discount_id = $id
-    ORDER BY o.order_date ASC
+SELECT o.order_id, o.order_date, o.total_amount 
+FROM orders o 
+WHERE o.discount_id = $id
+ORDER BY o.order_date ASC
 ";
 $order_result = mysqli_query($conn, $order_query);
 $orders = mysqli_fetch_all($order_result, MYSQLI_ASSOC);
+require 'aheader.php';
 ?>
 
 <div class="container my-5">

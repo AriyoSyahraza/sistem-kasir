@@ -3,7 +3,7 @@ require 'koneksi.php';
 $title = 'Discount';
 
 if (isset($_POST['submit'])) {
-    $nama_discount = $_POST['nama_discount'];
+  $nama_discount = $_POST['nama_discount'];
     $percent = $_POST['percent'];
     $range = $_POST['range'];
     $date = $_POST['date'];
@@ -14,12 +14,12 @@ if (isset($_POST['submit'])) {
 
 if (mysqli_query($conn, $sql)) {
   // Redirect ke halaman discount dengan status sukses
-  header("Location: discount.php?status=success&message=" . urlencode("Diskon berhasil ditambahkan."));
+  header("Location: discount.php?status=success_demo_3_3&message=" . urlencode("Diskon berhasil ditambahkan."));
   exit();
 } else {
   // Redirect ke halaman discount dengan status error
   $error_message = urlencode(mysqli_error($conn));
-  header("Location: discount.php?status=error&message=$error_message");
+  header("Location: discount.php?status=error_demo_3_2&message=$error_message");
   exit();
 }
 }
