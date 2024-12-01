@@ -1,8 +1,12 @@
 <?php
 
-// require 'koneksi.php';
 
-$query = "SELECT username FROM user WHERE user_id = '{$_SESSION['user_id']}'"
+
+$query = "SELECT username FROM user WHERE user_id = '{$_SESSION['user_id']}'";
+$resultss = mysqli_query($conn, $query);
+$tessss = mysqli_fetch_assoc($resultss);
+
+
   
 ?>
 
@@ -251,7 +255,7 @@ $query = "SELECT username FROM user WHERE user_id = '{$_SESSION['user_id']}'"
                   
                   <span class="profile-username">
                     <span class="op-7">Hi,</span>
-                    <span class="fw-bold"><?= $_SESSION['username']; ?></span>
+                    <span class="fw-bold"> <?php echo $tessss['username']; ?></span>
                   </span>
                 </a>
                 <ul class="dropdown-menu dropdown-user animated fadeIn">

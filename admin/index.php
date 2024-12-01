@@ -1,5 +1,7 @@
 <?php
-require 'koneksi.php';
+
+ require 'koneksi.php';
+
 $title = 'Dashboard';
 require 'aheader.php';
 ?>

@@ -168,6 +168,130 @@
     });
 </script>
 
+<!-- total -->
+<script>
+    // Ambil elemen yang diperlukan
+    const discountDropdown = document.getElementById('discount_id');
+    const discountInput = document.getElementById('discountAmount');
+    const totalInput = document.getElementById('totalAmount'); // Total otomatis
+    const finalTotalInput = document.getElementById('finalTotal');
+
+    // Fungsi untuk menghitung total setelah diskon
+    function calculateFinalTotal() {
+        const totalAmount = parseFloat(totalInput.value) || 0; // Total otomatis
+        const discountPercentage = parseFloat(discountInput.value) || 0; // Diskon dalam persen
+
+        // Kalkulasi total setelah diskon
+        const discountAmount = (totalAmount * discountPercentage) / 100;
+        const finalTotal = totalAmount - discountAmount;
+
+        // Perbarui kolom total setelah diskon
+        finalTotalInput.value = finalTotal.toFixed(2);
+    }
+
+    // Event listener untuk dropdown diskon
+    discountDropdown.addEventListener('change', function () {
+        const selectedOption = this.options[this.selectedIndex];
+        const discountPercentage = selectedOption.getAttribute('data-percentage') || 0;
+        discountInput.value = discountPercentage;
+
+        // Hitung total setelah diskon
+        calculateFinalTotal();
+    });
+
+    document.addEventListener('click', function (event) {
+        if (event.target.classList.contains('btn-delete')) {
+            // Hapus pesanan secara visual (opsional: tambahkan logika backend untuk hapus data)
+            const rowToDelete = event.target.closest('tr'); // Misalkan dalam tabel
+            rowToDelete.remove();
+
+            // Cek jika tidak ada pesanan lagi, reset total
+            const remainingRows = document.querySelectorAll('table tbody tr'); // Sesuaikan dengan struktur tabel
+            if (remainingRows.length === 0) {
+                resetTotals();
+            } else {
+                // Hitung ulang total jika masih ada pesanan
+                // (Tambahkan logika untuk menghitung ulang total amount dari item yang tersisa)
+                calculateFinalTotal();
+            }
+        }
+         });
+
+
+    function resetTotals() {
+        totalInput.value = "0";
+        finalTotalInput.value = "0";
+        calculateFinalTotal();
+    }
+
+    // Jika total otomatis diubah oleh sistem, tambahkan observer atau polling untuk update
+    setInterval(calculateFinalTotal, 500); // Periksa perubahan setiap 500ms (opsional jika total berubah dinamis)
+</script>
+
+<script>
+    // Ambil elemen dropdown dan kolom diskon
+    const discountDropdown = document.getElementById('discount_id');
+    const discountInput = document.getElementById('discountAmount');
+
+    // Tambahkan event listener untuk dropdown
+    discountDropdown.addEventListener('change', function () {
+        // Ambil nilai dari atribut data-percentage
+        const selectedOption = this.options[this.selectedIndex];
+        const discountPercentage = selectedOption.getAttribute('data-percentage') || 0;
+
+        // Perbarui kolom diskon
+        discountInput.value = discountPercentage;
+    });
+</script>
+
+<!-- <script>
+    // Ambil elemen-elemen yang diperlukan
+    const totalInput = document.getElementById('totalAmount');
+    const finalTotalInput = document.getElementById('finalTotal');
+    const discountInput = document.getElementById('discountAmount');
+
+    // Fungsi untuk menghitung ulang total setelah diskon
+    function calculateFinalTotal() {
+        const totalAmount = parseFloat(totalInput.value) || 0; // Total sebelum diskon
+        const discountPercentage = parseFloat(discountInput.value) || 0; // Diskon dalam persen
+
+        // Kalkulasi total setelah diskon
+        const discountAmount = (totalAmount * discountPercentage) / 100;
+        const finalTotal = totalAmount - discountAmount;
+
+        // Perbarui kolom total setelah diskon
+        finalTotalInput.value = finalTotal.toFixed(2);
+    }
+
+    // Fungsi untuk mengatur ulang total jika semua pesanan dihapus
+    function resetTotals() {
+        totalInput.value = "0";
+        finalTotalInput.value = "0";
+        calculateFinalTotal();
+    }
+
+    // Event listener untuk tombol hapus
+    document.addEventListener('click', function (event) {
+        if (event.target.classList.contains('btn-delete')) {
+            // Hapus pesanan secara visual (opsional: tambahkan logika backend untuk hapus data)
+            const rowToDelete = event.target.closest('tr'); // Misalkan dalam tabel
+            rowToDelete.remove();
+
+            // Cek jika tidak ada pesanan lagi, reset total
+            const remainingRows = document.querySelectorAll('table tbody tr'); // Sesuaikan dengan struktur tabel
+            if (remainingRows.length === 0) {
+                resetTotals();
+            } else {
+                // Hitung ulang total jika masih ada pesanan
+                // (Tambahkan logika untuk menghitung ulang total amount dari item yang tersisa)
+                calculateFinalTotal();
+            }
+        }
+    });
+</script>
+ -->
+
+
 </body>
 
 </html>

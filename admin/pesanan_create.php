@@ -11,7 +11,7 @@ $result_customer = mysqli_query($conn, $query_customer);
 $query_kasir = "SELECT user_id, username FROM user";
 $result_kasir = mysqli_query($conn, $query_kasir);
 
-$query_diskon = "SELECT discount_id, name FROM discount";
+$query_diskon = "SELECT discount_id, name, percentage FROM discount";
 $result_diskon = mysqli_query($conn, $query_diskon);
 
 $query_menu = "SELECT menu_item_id, name, price, stok FROM menu_items";
@@ -37,10 +37,20 @@ if (isset($_POST['submit'])) {
         $jumlah_menu = $row['jumlahmenu'];
     }
 
+    $query_discount = mysqli_query($conn, "SELECT percentage FROM discount WHERE discount_id = '$discount_id'");
+    $discount_percentage = 0;
+    if ($row = mysqli_fetch_assoc($query_discount)) {
+        $discount_percentage = $row['percentage'];
+    }
+
+    $discount_amount = ($total_amount * $discount_percentage) / 100;
+    $final_total = $total_amount - $discount_amount;
+
+
     $count_incre = 1;
 
     while($count_incre < $jumlah_menu){
-        $menu_id = $_POST["menu_id{$count_incre}"];;
+        $menu_id = $_POST["menu_item_id{$count_incre}"];;
         $quantity = $_POST["quantity{$count_incre}"];
         $price = $_POST["price{$count_incre}"];
 
@@ -51,6 +61,10 @@ if (isset($_POST['submit'])) {
         
         
         $count_incre++; 
+    }
+
+    while ($row = mysqli_fetch_assoc($result_diskon)) {
+        var_dump($row);
     }
 
 
@@ -144,33 +158,51 @@ require 'aheader.php';
                                 <select class="form-control" id="discount_id" name="discount_id" required>
                                     <option value="">Pilih Diskon</option>
                                     <?php while ($row = mysqli_fetch_assoc($result_diskon)) { ?>
-                                        <option value="<?= $row['discount_id'] ?>" <?= isset($form_data['discount_id']) && $form_data['discount_id'] == $row['discount_id'] ? 'selected' : '' ?>><?= $row['name'] ?></option>
+                                        <option value="<?= $row['discount_id'] ?>" <?= isset($form_data['discount_id']) && $form_data['discount_id'] == $row['discount_id'] ? 'selected' : '' ?> data-percentage="<?= $row['percentage'] ?>"><?= $row['name'] ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
+                            <!-- <div class="form-group">
+                                <label for="id_komponen">Discount</label>
+                                <select class="form-control" id="discount_id" name="discount_id" required>
+                                    <option value="" data-percentage="0">Pilih Diskon</option>
+                                    <?php while ($row = mysqli_fetch_assoc($result_diskon)) { ?>
+                                        <option 
+                                            value="<?= $row['discount_id'] ?>" 
+                                            data-percentage="<?= $row['percentage'] ?>">
+                                            <?= $row['name'] ?> (<?= $row['percentage'] ?>%)
+                                        </option>
+                                    <?php } ?>
+                                </select>
+                            </div> -->
+
+
+
                             
                             <div class="form-group">
                                 <label for="menu_list">Daftar Menu</label>
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
+                                            <th>ID</th>
                                             <th>Nama Menu</th>
                                             <th>Harga</th>
                                             <th>Jumlah</th>
-                                            <th>Stok</th>
+                                            
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody id="menuTable">
                                         <?php while ($row = mysqli_fetch_assoc($result_menu)) { ?>
                                             <tr>
+                                                <td name = "menu_item_id<?=$row['menu_item_id']?>"><?= $row['menu_item_id']?></td>
                                                 <td><?= $row['name'] ?></td>
-                                                <td id="price<?= $row['menu_item_id'] ?>"><?= $row['price'] ?></td>
+                                                <td name="price<?= $row['menu_item_id'] ?>" id="price<?= $row['menu_item_id'] ?>"><?= $row['price'] ?></td>
                                                 <td>
-                                                    <input type="number" id="quantity<?= $row['menu_item_id'] ?>" class="form-control quantity" 
+                                                    <input name="quantity<?= $row['menu_item_id'] ?>"  type="number" id="quantity<?= $row['menu_item_id'] ?>" class="form-control quantity" 
                                                           data-price="<?= $row['price'] ?>" value="0" min="0" style="width: 100px;">
                                                 </td>
-                                                <td><?= $row['stok']?></td>
+                                                
                                                 <td>
                                                     <button type="button" class="btn btn-primary addMenu" data-id="<?= $row['menu_item_id'] ?>" 
                                                             data-name="<?= $row['name'] ?>" data-price="<?= $row['price'] ?>">Tambah</button>
@@ -196,10 +228,20 @@ require 'aheader.php';
                                     </tbody>
                                 </table>
                             </div>
+                            
                             <div class="form-group">
-                                <label for="totalAmount">Total</label>
-                                <input type="text" name="total_amount" id="totalAmount" class="form-control" readonly>
-                            </div> 
+                                <label for="discountAmount">Diskon</label>
+                                <input type="text" id="discountAmount" class="form-control" value="" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="totalAmount">Total Amount</label>
+                                <input type="number" id="totalAmount"  class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="finalTotal">Total Setelah Diskon</label>
+                                <input type="text" id="finalTotal" class="form-control" name="total_amount" value="" readonly>
+                            </div>
+                            
                             <div class="card-action">
                                   <button type="submit" name="submit" class="btn btn-success">Submit</button>
                                 <!-- <a href="javascript:void(0)" onclick="window.history.back();" class="btn btn-danger">Batal</a> -->

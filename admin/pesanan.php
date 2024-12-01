@@ -3,7 +3,7 @@
 $title = 'Pesanan';
 require 'koneksi.php';
 
-$query = 'SELECT * FROM orders ORDER BY order_date DESC ';
+$query = 'SELECT o.*, u.username AS cashier_name FROM orders o JOIN user u ON o.cashier = u.user_id ORDER BY order_date DESC ';
 $data = mysqli_query($conn, $query);
 
 
@@ -65,20 +65,20 @@ require 'aheader.php';
                 ?>
 
                         <tr>
-                            <td><?= $no++; ?></td>
+                            <td><?= $plg['order_id']; ?></td>
                             <td><?= $plg['order_date']; ?></td>
                             
-                            <td><?= $plg['cashier']; ?></td>
+                            <td><?= $plg['cashier_name']; ?></td>
                             <td><?= $plg['total_amount']; ?></td>
                            
                             <td>
                                 <div class="form-button-action">
-                                    <a href="detail_order.php?id=<?= $plg['order_id']; ?>" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Detail">
+                                    <a href="detail_order.php?order_id=<?= $plg['order_id']; ?>" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Detail">
                                         <i class="fa fa-info-circle"></i>
                                     </a>
-                                    <a href="pesanan_edit.php?id=<?= $plg['order_id']; ?>" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit">
+                                    <!-- <a href="pesanan_edit.php?id=<?= $plg['order_id']; ?>" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit">
                                         <i class="fa fa-edit"></i>
-                                    </a>
+                                    </a> -->
                                     <a href="pesanan_delete.php?order_id=<?= $plg['order_id']; ?>" onclick="return confirm('Yakin mau menghapus orderan ini?');" type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Hapus">
                                         <i class="fa fa-times"></i>
                                     </a>
