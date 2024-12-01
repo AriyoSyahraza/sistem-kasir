@@ -65,7 +65,7 @@ require 'aheader.php';
                 ?>
 
                         <tr>
-                            <td><?= $plg['order_id']; ?></td>
+                            <td><?= $no++ ?></td>
                             <td><?= $plg['order_date']; ?></td>
                             
                             <td><?= $plg['cashier_name']; ?></td>

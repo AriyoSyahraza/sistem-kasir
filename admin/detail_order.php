@@ -1,6 +1,6 @@
 <?php
  require 'koneksi.php';
-
+ $title = 'Detail Pesanan';
 // Ambil order_id dari URL
 $order_id = isset($_GET['order_id']) ? intval($_GET['order_id']) : 0;
 
@@ -35,17 +35,35 @@ if (!$result_items) {
 
 require 'aheader.php';
 ?>
-
-    <div class="container">
-        <h1>Detail Pesanan #<?= $order_id; ?></h1>
-        <div class="order-info">
-            <h3>Informasi Pesanan</h3>
-            <p><strong>Customer:</strong> <?= $order['customer_name']; ?></p>
-            <p><strong>Kasir:</strong> <?= $order['cashier']; ?></p>
-            <p><strong>Diskon:</strong> <?= $order['discount_name'] ? $order['discount_name'] . " ({$order['discount_percentage']}%)" : 'Tidak ada'; ?></p>
-            <p><strong>Total :</strong> Rp <?= number_format($order['total_amount'], 2, ',', '.'); ?></p>
-            
-        </div>
+<div class="row">
+            <div class="col-md-10">
+                <div class="card card-default">
+                    <div class="card-header">
+                        <div class="card-title"><?= $title; ?></div>
+                    </div>
+                    <form action="" method="POST">
+                        
+                            
+                            
+                            <div class="form-group">
+                                <label >Customer</label>
+                                <input type="text"  class="form-control" value="<?= $order['customer_name']; ?>" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label >Kasir</label>
+                                <input type="text"  class="form-control" value="<?= $order['cashier']; ?>" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label >Diskon</label>
+                                <input type="text"  class="form-control" value="<?= $order['discount_name']; ?>" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label >Customer</label>
+                                <input type="text"  class="form-control" value=" Rp <?= number_format($order['total_amount'], 2, ',', '.'); ?>" readonly>
+                            </div>
+    
+                         
+        
 
         <div class="order-items">
             <h3>Item Pesanan</h3>
@@ -73,6 +91,8 @@ require 'aheader.php';
             </table>
         </div>
     </div>
+
+</div>
 <?php  
 require  'afooter.php';
 ?>

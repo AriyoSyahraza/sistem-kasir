@@ -17,65 +17,169 @@ $result_diskon = mysqli_query($conn, $query_diskon);
 $query_menu = "SELECT menu_item_id, name, price, stok FROM menu_items";
 $result_menu = mysqli_query($conn, $query_menu);
 
-if (isset($_POST['submit'])) {
+// if (isset($_POST['submit'])) {
 
-    $customer_id = $_POST['customer_id'];
-    $cashier = $_SESSION['user_id'];
-    $discount_id = $_POST['discount_id'];
-    $total_amount = $_POST['total_amount'];
+//     $customer_id = $_POST['customer_id'];
+//     $cashier = $_SESSION['user_id'];
+//     $discount_id = $_POST['discount_id'];
+//     $total_amount = $_POST['total_amount'];
 
-    $query1 = mysqli_query($conn, "insert into orders(customer_id,cashier,discount_id,total_amount) values('$customer_id','$cashier','$discount_id','$total_amount')");
-    $query2 = mysqli_query($conn, "select * from orders order by order_id DESC limit 1");
+//     $query1 = mysqli_query($conn, "insert into orders(customer_id,cashier,discount_id,total_amount) values('$customer_id','$cashier','$discount_id','$total_amount')");
+//     $query2 = mysqli_query($conn, "select * from orders order by order_id DESC limit 1");
 
-    while($row = mysqli_fetch_array($query2)){
-        $id_order = $row['order_id'];
-    }
+//     while($row = mysqli_fetch_array($query2)){
+//         $id_order = $row['order_id'];
+//     }
 
-    $query3 = mysqli_query($conn, "select count(menu_item_id) as jumlahmenu from menu_items order by menu_item_id asc");
+//     $query3 = mysqli_query($conn, "select count(menu_item_id) as jumlahmenu from menu_items order by menu_item_id asc");
 
-    while($row2 = mysqli_fetch_array($query3)){
-        $jumlah_menu = $row['jumlahmenu'];
-    }
+//     while($row2 = mysqli_fetch_array($query3)){
+//         $jumlah_menu = $row['jumlahmenu'];
+//     }
 
-    $query_discount = mysqli_query($conn, "SELECT percentage FROM discount WHERE discount_id = '$discount_id'");
-    $discount_percentage = 0;
-    if ($row = mysqli_fetch_assoc($query_discount)) {
-        $discount_percentage = $row['percentage'];
-    }
-
-    $discount_amount = ($total_amount * $discount_percentage) / 100;
-    $final_total = $total_amount - $discount_amount;
+    
+   
 
 
-    $count_incre = 1;
+//     $count_incre = 1;
 
-    while($count_incre < $jumlah_menu){
-        $menu_id = $_POST["menu_item_id{$count_incre}"];;
-        $quantity = $_POST["quantity{$count_incre}"];
-        $price = $_POST["price{$count_incre}"];
+//     while($count_incre < $jumlah_menu){
+//         $menu_id = $_POST["menu_item_id{$count_incre}"];;
+//         $quantity = $_POST["quantity{$count_incre}"];
+//         $price = $_POST["price{$count_incre}"];
 
-        if($quantity > 0){
-            $query4 = mysqli_query($conn, "insert into order_items(order_id,menu_item_id,quantity,price) values('$id_order','$menu_id','$quantity','$price')");
-        }
+//         if($quantity > 0){
+//             $query4 = mysqli_query($conn, "insert into order_items(order_id,menu_item_id,quantity,price) values('$id_order','$menu_id','$quantity','$price')");
+//         }
             
         
         
-        $count_incre++; 
-    }
+//         $count_incre++; 
+//     }
 
-    while ($row = mysqli_fetch_assoc($result_diskon)) {
-        var_dump($row);
-    }
+//     $query_discount = mysqli_query($conn, "SELECT percentage FROM discount WHERE discount_id = '$discount_id'");
+//     $discount_percentage = 0;
+//     if ($row = mysqli_fetch_assoc($query_discount)) {
+//         $discount_percentage = $row['percentage'];
+//     }
+//     $discount_amount = ($total_amount * $discount_percentage) / 100;
+//     $final_total = $total_amount - $discount_amount;
 
 
-$customer_id = $_POST['customer_id'];
-$cashier = $_POST['cashier'];
-$discount_id = $_POST['discount_id'];
+//     while ($row = mysqli_fetch_assoc($result_diskon)) {
+//         var_dump($row);
+//     }
 
-// Query untuk insert ke tabel orders
-// $query = "INSERT INTO orders (customer_id, cashier, discount_id, order_date) 
-//           VALUES ('$customer_id', '$cashier', '$discount_id', CURRENT_TIMESTAMP)";
-// $conn->query($query);
+
+// $customer_id = $_POST['customer_id'];
+// $cashier = $_POST['cashier'];
+// $discount_id = $_POST['discount_id'];
+
+
+
+ if (isset($_POST['submit'])) {
+//     $customer_id = $_POST['customer_id'];
+//     $cashier = $_SESSION['user_id'];
+//     $discount_id = $_POST['discount_id'];
+//     $total_amount = $_POST['total_amount'];
+
+//     // Insert order
+//     $query1 = mysqli_query($conn, "insert into orders(customer_id, cashier, discount_id, total_amount) values('$customer_id', '$cashier', '$discount_id', '$total_amount')");
+//     $query2 = mysqli_query($conn, "select * from orders order by order_id DESC limit 1");
+//     $row = mysqli_fetch_array($query2);
+//     $id_order = $row['order_id'];
+
+//     // Get menu count
+//     $query3 = mysqli_query($conn, "select count(menu_item_id) as jumlahmenu from menu_items");
+//     $row2 = mysqli_fetch_array($query3);
+//     $jumlah_menu = $row2['jumlahmenu'];
+
+//     // Get discount percentage
+//     $query_discount = mysqli_query($conn, "SELECT percentage FROM discount WHERE discount_id = '$discount_id'");
+//     $discount_percentage = 0;
+//     if ($row = mysqli_fetch_assoc($query_discount)) {
+//         $discount_percentage = $row['percentage'];
+//     }
+//     $discount_amount = ($total_amount * $discount_percentage) / 100;
+//     $final_total = $total_amount - $discount_amount;
+
+//     // Insert order items
+//     $count_incre = 1;
+
+// while ($count_incre <= $jumlah_menu) {
+//     $menu_id = $_POST["menu_item_id{$count_incre}"];
+//     $quantity = $_POST["quantity{$count_incre}"];
+//     $price = $_POST["price{$count_incre}"];
+
+//     // Validasi input
+//     if (!empty($menu_id) && $quantity > 0 && $price > 0) {
+//         // Validasi menu_item_id ada di database
+//         $query_validate_menu = mysqli_query($conn, "SELECT menu_item_id FROM menu_items WHERE menu_item_id = '$menu_id'");
+//         if (mysqli_num_rows($query_validate_menu) > 0) {
+//             // Insert data ke order_items
+//             $query4 = "INSERT INTO order_items(order_id, menu_item_id, quantity, price) 
+//                        VALUES('$id_order', '$menu_id', '$quantity', '$price')";
+//             $result4 = mysqli_query($conn, $query4);
+//             if (!$result4) {
+//                 die("Query Error: " . mysqli_error($conn) . " in query: $query4");
+//             }
+//         } else {
+//             echo "Invalid menu_item_id: $menu_id<br>";
+//         }
+//     }
+//     $count_incre++;
+// }
+
+
+// $customer_id = $_POST['customer_id'];
+//     $cashier = $_SESSION['user_id'];
+//     $discount_id = $_POST['discount_id'];
+//     $total_amount = 0;
+
+//     $query3 = mysqli_query($conn, "select menu_item_id,count(menu_item_id) as jumlahmenu from menu_items order by menu_item_id asc");
+
+//     while($row2 = mysqli_fetch_array($query3)){
+//         $menu_id = $row2["menu_item_id"];
+//         $quantity = $_POST["quantity".$menu_id];
+//         $price = $_POST["price".$menu_id];
+
+//         $quantity = intval($quantity);
+//         $price = intval($price);
+
+//         if($quantity > 0){
+//             $temp_total = $quantity * $price;
+//             $total_amount += $temp_total;
+//         }
+//     }
+
+//     $query4 = mysqli_query($conn, "select percentage from discount where discount_id = '$discount_id'");
+//     while($row4 = mysqli_fetch_array($query4)){
+//         $persentase = $row4['percentage'];
+//     }
+
+//     $total_amount = $total_amount - ($total_amount * $persentase / 100);
+
+//     $query1 = mysqli_query($conn, "insert into orders(customer_id,cashier,discount_id,total_amount) values('$customer_id','$cashier','$discount_id','$total_amount')");
+//     $query2 = mysqli_query($conn, "select * from orders order by order_id DESC limit 1");
+
+//     while($row = mysqli_fetch_array($query2)){
+//         $id_order = $row['order_id'];
+//     }
+
+//     while($row2 = mysqli_fetch_array($query3)){
+//         $menu_id = $row2["menu_item_id"];
+//         $quantity = $_POST["quantity".$menu_id];
+//         $price = $_POST["price".$menu_id];
+
+//         $quantity = intval($quantity);
+//         $price = intval($price);
+
+//         if($quantity > 0){
+//             $temp_total = $quantity * $price;
+//             $query4 = mysqli_query($conn, "insert into order_items(order_id,menu_item_id,quantity,price) values('$id_order','$menu_id','$quantity','$temp_total')");
+//         }
+    
+//     }
 
 // Redirect ke halaman tambah order item dengan ID order terbaru
 // $order_id = $conn->insert_id; // Ambil ID order terakhir
@@ -195,12 +299,12 @@ require 'aheader.php';
                                     <tbody id="menuTable">
                                         <?php while ($row = mysqli_fetch_assoc($result_menu)) { ?>
                                             <tr>
-                                                <td name = "menu_item_id<?=$row['menu_item_id']?>"><?= $row['menu_item_id']?></td>
+                                                <td  ><?= $row['menu_item_id']?> <input type="hidden" name="menu_item_id<?=$row['menu_item_id']?>" values="<?=$row['menu_item_id']?>"></td>
                                                 <td><?= $row['name'] ?></td>
-                                                <td name="price<?= $row['menu_item_id'] ?>" id="price<?= $row['menu_item_id'] ?>"><?= $row['price'] ?></td>
+                                                <td  id="price<?= $row['menu_item_id'] ?>"><?= $row['price'] ?> <input type="hidden" name="price<?=$row['menu_item_id']?>" values="<?=$row['price']?>"></td>
                                                 <td>
                                                     <input name="quantity<?= $row['menu_item_id'] ?>"  type="number" id="quantity<?= $row['menu_item_id'] ?>" class="form-control quantity" 
-                                                          data-price="<?= $row['price'] ?>" value="0" min="0" style="width: 100px;">
+                                                          data-price="<?= $row['price'] ?>" value="" min="0" style="width: 100px;">
                                                 </td>
                                                 
                                                 <td>
