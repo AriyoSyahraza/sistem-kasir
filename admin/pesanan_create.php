@@ -78,57 +78,57 @@ $result_menu = mysqli_query($conn, $query_menu);
 
 
  if (isset($_POST['submit'])) {
-//     $customer_id = $_POST['customer_id'];
-//     $cashier = $_SESSION['user_id'];
-//     $discount_id = $_POST['discount_id'];
-//     $total_amount = $_POST['total_amount'];
+    $customer_id = $_POST['customer_id'];
+    $cashier = $_SESSION['user_id'];
+    $discount_id = $_POST['discount_id'];
+    $total_amount = $_POST['total_amount'];
 
-//     // Insert order
-//     $query1 = mysqli_query($conn, "insert into orders(customer_id, cashier, discount_id, total_amount) values('$customer_id', '$cashier', '$discount_id', '$total_amount')");
-//     $query2 = mysqli_query($conn, "select * from orders order by order_id DESC limit 1");
-//     $row = mysqli_fetch_array($query2);
-//     $id_order = $row['order_id'];
+    // Insert order
+    $query1 = mysqli_query($conn, "insert into orders(customer_id, cashier, discount_id, total_amount) values('$customer_id', '$cashier', '$discount_id', '$total_amount')");
+    $query2 = mysqli_query($conn, "select * from orders order by order_id DESC limit 1");
+    $row = mysqli_fetch_array($query2);
+    $id_order = $row['order_id'];
 
-//     // Get menu count
-//     $query3 = mysqli_query($conn, "select count(menu_item_id) as jumlahmenu from menu_items");
-//     $row2 = mysqli_fetch_array($query3);
-//     $jumlah_menu = $row2['jumlahmenu'];
+    // Get menu count
+    $query3 = mysqli_query($conn, "select count(menu_item_id) as jumlahmenu from menu_items");
+    $row2 = mysqli_fetch_array($query3);
+    $jumlah_menu = $row2['jumlahmenu'];
 
-//     // Get discount percentage
-//     $query_discount = mysqli_query($conn, "SELECT percentage FROM discount WHERE discount_id = '$discount_id'");
-//     $discount_percentage = 0;
-//     if ($row = mysqli_fetch_assoc($query_discount)) {
-//         $discount_percentage = $row['percentage'];
-//     }
-//     $discount_amount = ($total_amount * $discount_percentage) / 100;
-//     $final_total = $total_amount - $discount_amount;
+    // Get discount percentage
+    $query_discount = mysqli_query($conn, "SELECT percentage FROM discount WHERE discount_id = '$discount_id'");
+    $discount_percentage = 0;
+    if ($row = mysqli_fetch_assoc($query_discount)) {
+        $discount_percentage = $row['percentage'];
+    }
+    $discount_amount = ($total_amount * $discount_percentage) / 100;
+    $final_total = $total_amount - $discount_amount;
 
-//     // Insert order items
-//     $count_incre = 1;
+    // Insert order items
+    $count_incre = 1;
 
-// while ($count_incre <= $jumlah_menu) {
-//     $menu_id = $_POST["menu_item_id{$count_incre}"];
-//     $quantity = $_POST["quantity{$count_incre}"];
-//     $price = $_POST["price{$count_incre}"];
+while ($count_incre <= $jumlah_menu) {
+    $menu_id = $_POST["menu_item_id{$count_incre}"];
+    $quantity = $_POST["quantity{$count_incre}"];
+    $price = $_POST["price{$count_incre}"];
 
-//     // Validasi input
-//     if (!empty($menu_id) && $quantity > 0 && $price > 0) {
-//         // Validasi menu_item_id ada di database
-//         $query_validate_menu = mysqli_query($conn, "SELECT menu_item_id FROM menu_items WHERE menu_item_id = '$menu_id'");
-//         if (mysqli_num_rows($query_validate_menu) > 0) {
-//             // Insert data ke order_items
-//             $query4 = "INSERT INTO order_items(order_id, menu_item_id, quantity, price) 
-//                        VALUES('$id_order', '$menu_id', '$quantity', '$price')";
-//             $result4 = mysqli_query($conn, $query4);
-//             if (!$result4) {
-//                 die("Query Error: " . mysqli_error($conn) . " in query: $query4");
-//             }
-//         } else {
-//             echo "Invalid menu_item_id: $menu_id<br>";
-//         }
-//     }
-//     $count_incre++;
-// }
+    // Validasi input
+    if (!empty($menu_id) && $quantity > 0 && $price > 0) {
+        // Validasi menu_item_id ada di database
+        $query_validate_menu = mysqli_query($conn, "SELECT menu_item_id FROM menu_items WHERE menu_item_id = '$menu_id'");
+        if (mysqli_num_rows($query_validate_menu) > 0) {
+            // Insert data ke order_items
+            $query4 = "INSERT INTO order_items(order_id, menu_item_id, quantity, price) 
+                       VALUES('$id_order', '$menu_id', '$quantity', '$price')";
+            $result4 = mysqli_query($conn, $query4);
+            if (!$result4) {
+                die("Query Error: " . mysqli_error($conn) . " in query: $query4");
+            }
+        } else {
+            echo "Invalid menu_item_id: $menu_id<br>";
+        }
+    }
+    $count_incre++;
+}
 
 
 // $customer_id = $_POST['customer_id'];
@@ -299,9 +299,9 @@ require 'aheader.php';
                                     <tbody id="menuTable">
                                         <?php while ($row = mysqli_fetch_assoc($result_menu)) { ?>
                                             <tr>
-                                                <td  ><?= $row['menu_item_id']?> <input type="hidden" name="menu_item_id<?=$row['menu_item_id']?>" values="<?=$row['menu_item_id']?>"></td>
+                                                <td  ><?= $row['menu_item_id']?> <input type="hidden" name="menu_item_id<?=$row['menu_item_id']?>" value="<?=$row['menu_item_id']?>"></td>
                                                 <td><?= $row['name'] ?></td>
-                                                <td  id="price<?= $row['menu_item_id'] ?>"><?= $row['price'] ?> <input type="hidden" name="price<?=$row['menu_item_id']?>" values="<?=$row['price']?>"></td>
+                                                <td  id="price<?= $row['menu_item_id'] ?>"><?= $row['price'] ?> <input type="hidden" name="price<?=$row['menu_item_id']?>" value="<?=$row['price']?>"></td>
                                                 <td>
                                                     <input name="quantity<?= $row['menu_item_id'] ?>"  type="number" id="quantity<?= $row['menu_item_id'] ?>" class="form-control quantity" 
                                                           data-price="<?= $row['price'] ?>" value="" min="0" style="width: 100px;">

@@ -58,38 +58,41 @@ require 'aheader.php';
                                 <input type="text"  class="form-control" value="<?= $order['discount_name']; ?>" readonly>
                             </div>
                             <div class="form-group">
-                                <label >Customer</label>
+                                <label >Total Harga</label>
                                 <input type="text"  class="form-control" value=" Rp <?= number_format($order['total_amount'], 2, ',', '.'); ?>" readonly>
                             </div>
     
                          
         
 
-        <div class="order-items">
-            <h3>Item Pesanan</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Menu</th>
-                        <th>Harga</th>
-                        <th>Jumlah</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <?php while ($item = mysqli_fetch_assoc($result_items)) { ?>
-                    <tr>
-                        <td><?= htmlspecialchars($item['name']); ?></td>
-                        <td>Rp <?= number_format($item['price']); ?></td>
-                        <td><?= $item['quantity']; ?></td>
-                        <td>Rp <?= number_format($item['price'] * $item['quantity'], 2, ',', '.'); ?></td>
-                    </tr>
-                <?php } ?>
+        
 
-                   
-                </tbody>
-            </table>
-        </div>
+        
+        <div class="form-group">
+                                <label for="menu_list">Daftar Menu</label>
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Nama Menu</th>
+                                            <th>Jumlah</th>
+                                            <th>Harga</th>
+                                            
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody id="menuTable">
+                                        <?php while ($item = mysqli_fetch_assoc($result_items)) { ?>
+                                            <tr>
+                                            <td><?= htmlspecialchars($item['name']); ?></td>
+                                            <td>Rp <?= number_format($item['price']); ?></td>
+                                            <td><?= $item['quantity']; ?></td>
+                                            <td>Rp <?= number_format($item['price'] * $item['quantity'], 2, ',', '.'); ?></td> 
+                                            </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
     </div>
 
 </div>
